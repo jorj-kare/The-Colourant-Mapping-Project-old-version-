@@ -1,0 +1,35 @@
+{% extends 'layout.html' %} {% load crispy_forms_tags %}{% load mathfilters %}
+{% block title %} Colourant Details {% endblock title %} {% block content %}
+<div class="row row--last ">
+  
+    <ul class='details '>
+      <li class="details__item"><span  class="details__title">Colour:</span>{{ colourants.colour}}</li>
+      <li class="details__item"><span  class="details__title">Pigment:</span>{{ colourants.pigment}}</li>
+      <li class="details__item">
+        <span class="details__title">Chronology:</span>From {{ colourants.chronology_from|abs}} 
+        {% if colourants.chronology_from < 0 %} BCE to 
+        {%else%} CE to {% endif %} 
+        {{colourants.chronology_to|abs}} 
+        {% if colourants.chronology_to < 0 %} BCE
+        {%else%} CE {% endif %}
+      </li>
+      <li class="details__item"><span class="details__title">Location:</span>{{ colourants.location}}</li>
+      <li class="details__item"><span class="details__title">Coordinates:</span>{{ colourants.latitude}}, {{ colourants.longitude}}</li>
+      <li class="details__item"><span class="details__title">Analytical techniques:</span>{{ colourants.techniques}}</li>
+      <li class="details__item"><span class="details__title">Context:</span>{{ colourants.context}}</li>
+      <li class="details__item">
+        <span class="details__title">Arhceological context:</span>{{ colourants.archeological_context}}
+      </li>
+      <li class="details__item"><span class="details__title">Notes:</span>{{ colourants.notes}}</li>
+      <li class="details__item"><span class="details__title">References:</span>{{ colourants.references}}</li>
+
+      {% if colourants.public_available == True %}
+      <li class="details__item"><span class="details__title">Contributor Name:</span>{{ colourants.name}}</li>
+      <li class="details__item"><span class="details__title">Contributor Email:</span>{{ colourants.email}}</li>
+      <li class="details__item"><span class="details__title">Contributor Affiliation:</span>{{ colourants.affiliation}}</li>
+      {% endif %}
+    </ul>
+  
+  
+</div>
+{% endblock %}

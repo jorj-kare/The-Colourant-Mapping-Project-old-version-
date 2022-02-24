@@ -1,0 +1,41 @@
+{% extends 'layout.html' %} {% load crispy_forms_tags %} {% block title %} The
+colourant mapping project {% endblock title %} {% block content %}
+<div class="hero">
+  <h1 class="hero__title">The Colourant Mapping Project</h1>
+  <a class="hero__link" href="#intro">&#9661;</a>
+</div>
+<div class="row row--last">
+  <div class="intro-text box1" id="intro">
+    <p>
+      Archaeological research has unearthed a vibrantly colourful ancient world:
+      from Egyptian sarcophagi to Pompeian houses and from tinted glass to
+      scarlet red textiles, recent advances in archaeological science have led
+      to the identification of a plethora of materials used to colour things.
+      Minerals, metals, plants, earths, and even sea molluscs are found among
+      the colourants of the ancient palette.
+    </p>
+    <p>
+      The Colourant Mapping Project aims to systematically record the
+      occurrences of ancient pigments, dyes, and other painting materials. 
+      This interactive mapping web application aims to create an open-access database 
+      of ancient colourants that can be used by researchers and the wider public to illustrate patterns of exchange and highlight
+      regional variations. 
+      The project relies on the contributions of its users, who can submit
+      <a class="intro-text__link" href="{% url 'colors:index'%}">new entries</a>
+      through the designated form. Each entry will be reviewed by our team to avoid
+      duplicates and ensure the academic integrity of the database. Our
+      <a class="intro-text__link" href="{% url 'colors:map' %}">map</a>
+      will be updated and new entries will be included shortly after your
+      submissions.
+    </p>
+    <p>
+      We are looking forward to our next steps as our map becomes more colourful
+      every single day!
+    </p>
+  </div>
+</div>
+<script>
+  document.querySelector(".js-background-nav").classList.add("hidden");
+  document.querySelector(".js-nav").classList.add("nav--blue");
+</script>
+{% endblock%}

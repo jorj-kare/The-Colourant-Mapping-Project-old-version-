@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      property="og:description"
+      content="The Colourant Mapping Project aims to systematically record the occurrences of ancient pigments, dyes, and other painting materials, through a bottom-up approach. Our ambitious vision is to create an open-access database of ancient colourants that can be used by researchers and the wider public to illustrate patterns of exchange and highlight regional variations."
+    />
+    <meta
+      name="keywords"
+      content="pigments, ancient colourants, colourant database, mapping project, colourant mapping project, ancient polychromy,ancient dyes, open-access database of ancient colourants"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,600;1,100;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&family=Oswald:wght@200;300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet"  href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet"  href="{% static 'css/local-styles.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>
+      The Colourant Mapping Project | {% block title %}{% endblock title %}
+    </title>
+  </head>
+  <body>
+  
+  <div class="background-nav js-background-nav"></div>
+    <nav class="nav js-nav ">
+      <ul class="nav__list">
+        <li>
+          <a href="{% url 'colors:info'%}">
+            <img
+              class="nav__img"
+              src="{% static 'images/nav3.png' %} "
+              alt="pigments"
+          /></a>
+        </li>
+        <li><a class="nav__link" href="{% url 'colors:map' %}">Map</a></li>
+        <li><a class="nav__link" href="{% url 'colors:index'%}">New Entry</a></li>
+        <li><a class="nav__link" href="{% url 'colors:contact'%}"> Contact</a></li>
+      </ul>
+    </nav>
+    <main>
+      {% include 'messages.html' %} {% block content %} {% endblock content%}
+    </main>
+
+    <footer class="footer">
+      <p class= 'footer__text'>
+        This product includes GeoLite2 data created by MaxMind, available from
+      </p>
+      <a class='footer__link' href="https://www.maxmind.com">https://www.maxmind.com</a>
+    </footer>
+    
+    <script>
+      setTimeout(function () {
+        if ($(".js-message").length > 0) {
+          $(".message").remove();
+        }
+      }, 2500);
+    </script>
+  </body>
+
+</html>

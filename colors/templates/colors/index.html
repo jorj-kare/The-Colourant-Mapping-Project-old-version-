@@ -1,0 +1,403 @@
+{% extends 'layout.html' %} {% load crispy_forms_tags %} {% block title %}
+Calculate distance {% endblock title %} {%block content %}
+
+<div class="row">
+  <div class="map-box">{{map|safe}}</div>
+</div>
+<div class="row">
+  <form class="box box--search-country" action="" method="POST">
+    {% csrf_token %}
+    <div class="entries__input entries__input--search ">
+    <div class="entries__input">{{ search_form.find|as_crispy_field}} </div>
+    <div>
+      <button name="search" type="submit" class="btn btn--fifth">Search</button>     
+    </div>
+    
+    <button type="button" class="btn-info btn--fifth js-btn-info">i</button>
+    <div class="entries__info-text hidden">
+      <p>You can easily navigate the map by the search function.</p>
+        <div class="logo-info js-logo-info btn--fifth">i</div>
+    </div> 
+  </div>
+  </form>
+</div>
+
+<form class="entries js-entries" action="" method="POST" autocomplete="off">
+  {% csrf_token %}
+  <div class="row">
+    <fieldset class="entries__fieldset entries__fieldset--fill">
+   
+   <div> <legend>Provenience (place of discovery)</legend></div>
+      <div class="entries__input entries__input--full">
+        {{c_f.location|as_crispy_field}}
+        <button type="button" class="btn-info btn--fifth js-btn-info">i</button>
+        <div class="entries__info-text hidden">
+          <p>You can either type an address or, with the help of the map, find
+            the coordinates. By clicking on the map you can get the specific coordinates.</p>
+            <div class="logo-info js-logo-info btn--fifth">i</div>
+        </div>
+      </div>
+      <div class="entries__input entries__input--full">
+      <div class="entries__input entries__input--half">
+       
+        {{c_f.latitude|as_crispy_field}} {{c_f.longitude|as_crispy_field}}
+       
+      </div>
+      <button type="button" class="btn-info btn-info--coord btn--fifth js-btn-info">i</button>
+      
+      <div class="entries__info-text hidden">
+        <p>  Left click on the map gives you the latitude and longitude of the selected location. You can copy and paste the coordinates here. </p>
+          <div class="logo-info js-logo-info btn--fifth">i</div>
+      </div>
+    </div>
+    
+      <div class="entries__input entries__input--full">
+  
+      </div>
+    </fieldset>
+  </div>
+  <div class="row">
+    <fieldset class="entries__fieldset ">
+  
+      
+        <legend>Details</legend>
+      
+      <div class="entries__select-box">
+        <label for="id_colour">Colour</label>
+        <div class= 'select select--pigment'>
+         {{c_f.colour|as_crispy_field}}
+      
+    </div>
+    </div>
+      <div class="entries__input entries__input--full">{{colour_other}}</div>
+      <div class="entries__select-box ">
+        <label for="id_pigment">Pigment</label>
+        <div class ='select select--pigment'>
+        {{c_f.pigment|as_crispy_field}}
+        </div>
+      </div>
+      <div class="entries__input entries__input--full">{{pigment_other}}</div>
+
+      <div class="entries__select-box">
+        <label for="input-chr-from">Chronology</label>
+        <div class="entries__input entries__input--chr">
+          <div class="select select--period">
+            <select id="chr-from" name="chr-from">
+              <option value="bce">BCE</option>
+              <option value="ce">CE</option>
+            </select>
+          </div>
+          <div class="select select--chr">{{c_f.chronology_from}}</div>
+        </div>
+      </div>
+      <div class="entries__select-box">
+        <label for="input-chr-to">to </label>
+        <div class="entries__input entries__input--chr">
+          <div class="select select--period">
+            <select id="chr-to" name="chr-to">
+              <option id="chr-to-bce" value="bce">BCE</option>
+              <option id="chr-to-ce" value="ce">CE</option>
+            </select>
+          </div>
+          <div class="select select--chr">{{c_f.chronology_to}}</div>
+        </div>
+      </div>
+  
+      <div class="entries__input entries__input--full">
+        {{c_f.techniques|as_crispy_field}}
+        <button type="button" class="btn-info btn--fifth js-btn-info">i</button>
+      <div class="entries__info-text hidden">
+        <p> How were the materials identified? Provide a list of the techniques used, e.g. XRF, Raman, etc. </p>
+          <div class="logo-info js-logo-info btn--fifth">i</div>
+      </div>
+      </div>
+      <div class="entries__input entries__input--context-box">
+        <label for="id_context">Context</label>
+        <div class="select">{{c_f.context}}</div>
+      </div>
+      <div class="entries__input entries__input--full">{{context_other}}</div>
+      <div class="entries__input entries__input--full">
+        {{c_f.archeological_context|as_crispy_field}}
+      </div>
+      <div class="entries__input entries__input--full">
+        {{c_f.references|as_crispy_field}}
+        <button type="button" class="btn-info btn--fifth js-btn-info">i</button>
+        <div class="entries__info-text hidden">
+          <p> You can chose any reference style. Please, provide DOI number. </p>
+            <div class="logo-info js-logo-info btn--fifth ">i</div>
+        </div>
+      </div>
+      <div class="entries__input entries__input--full">
+        {{c_f.notes|as_crispy_field}}
+      </div>
+    </fieldset>
+  </div>
+  <div class="row">
+    <fieldset class="entries__fieldset  entries__fieldset--fill">
+     <div> <legend>Personal information</legend></div>
+      <div class="entries__input entries__input--full">
+        {{c_f.name|as_crispy_field}} {{c_f.email|as_crispy_field}}
+      </div>
+      <div class="entries__input entries__input--full">
+        {{c_f.affiliation|as_crispy_field}}
+        <button type="button" class="btn-info btn--fifth js-btn-info">i</button>
+        <div class="entries__info-text hidden">
+          <p>How were these materials identified? Provide the full name of the technique(s), e.g., X-ray Fluorescence Spectroscopy (XRF).  </p>
+          <div class="logo-info js-logo-info btn--fifth">i</div>
+        </div>
+      </div>
+     
+      
+      <div class="entries__input entries__input--full">
+        <div class='publicly-check' >
+        {{c_f.publicly_available|as_crispy_field}}
+        <button type="button" class="btn-info btn--fifth js-btn-info">i</button>
+        <div class="entries__info-text hidden">
+          <div class="logo-info js-logo-info btn--fifth">i</div>
+          <p>Check this box if you would like your personal info (name and affiliation) to be published. </p>
+        </div>
+      </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="row row--last">
+    <div class="button-box">
+      <button name="entries" type="submit" class="btn btn--fifth">
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+<script>
+  "use strict";
+
+  ///////////////////////////////
+  const chr_from = document.querySelector("#chr-from");
+  const chr_to = document.querySelector("#chr-to");
+  const bce_chr_from = document.querySelector("#id_chronology_from optgroup");
+  const ce_chr_from = document.querySelector("#id_chronology_from")
+    .childNodes[3];
+  const bce_chr_to = document.querySelector("#id_chronology_to optgroup");
+  const ce_chr_to = document.querySelector("#id_chronology_to ").childNodes[3];
+  const input_chr_from = document.querySelector("#id_chronology_from");
+  const input_chr_to = document.querySelector("#id_chronology_to");
+  const from_1ce = document.querySelector("#id_chronology_from").childNodes[3]
+    .firstElementChild;
+  const from_5bce = document.querySelector(
+    "#id_chronology_from optgroup"
+  ).firstElementChild;
+
+  ////////////////////
+  const context = document.querySelector("#id_context");
+  const context_other = document.querySelector("#id_context_other").closest('.entries__input');
+  const colour = document.querySelector('#id_colour')
+  const colour_other = document.querySelector('#id_colour_other').closest('.entries__input');
+  const pigment = document.querySelector('#id_pigment')
+  const pigment_other = document.querySelector('#id_pigment_other').closest('.entries__input');
+
+  const logoInfo = document.querySelectorAll('.js-logo-info');
+  const btn_info = document.querySelectorAll(".js-btn-info");
+  const text_info = document.querySelectorAll(".entries__info-text");
+  const forms = document.querySelectorAll("form");
+
+  const locationInput = document.querySelector('#id_location')
+  const longitudeInput = document.querySelector('#id_longitude')
+  const latitudeInput = document.querySelector('#id_latitude')
+  
+  ////////////////////////////////
+  //functions
+  const display = function () {
+    const options = document.querySelectorAll("#id_chronology_to option");
+    options.forEach((opt) => {
+      if (Number(opt.value) < Number(input_chr_from.value)) {
+        opt.classList.add("hidden");
+      } else {
+        opt.classList.remove("hidden");
+      }
+    });
+  };
+
+  /////////////////////
+  //Chronology
+  let value_from = input_chr_from.value;
+  let value_to = input_chr_to.value;
+
+  ce_chr_from.classList.add("hidden");
+  ce_chr_to.classList.add("hidden");
+
+  input_chr_to.addEventListener("change", function (e) {
+    value_to = input_chr_to.value;
+  });
+
+  chr_from.addEventListener("click", function (e) {
+    if (chr_from.value === "ce") {
+      bce_chr_from.classList.add("hidden");
+      ce_chr_from.classList.remove("hidden");
+      input_chr_from.value = from_1ce.value;
+      value_from = input_chr_from.value;
+
+      if (Number(value_to) < Number(value_from)) {
+        input_chr_to.value = input_chr_from.value;
+        chr_to.value = chr_from.value;
+        value_to = value_from;
+        bce_chr_to.classList.add("hidden");
+        ce_chr_to.classList.remove("hidden");
+      }
+
+      document
+        .querySelector("#chr-to-bce")
+        .setAttribute("disabled", "disabled");
+    }
+    if (chr_from.value === "bce") {
+      bce_chr_from.classList.remove("hidden");
+      ce_chr_from.classList.add("hidden");
+      input_chr_from.value = from_5bce.value;
+      value_from = input_chr_from.value;
+
+      if (Number(value_to) < Number(value_from)) {
+        input_chr_to.value = input_chr_from.value;
+        chr_to.value = chr_from.value;
+        bce_chr_to.classList.remove("hidden");
+        ce_chr_to.classList.add("hidden");
+      }
+      display();
+
+      document.querySelector("#chr-to-bce").removeAttribute("disabled");
+    }
+  });
+
+  chr_to.addEventListener("click", function (e) {
+    if (chr_to.value === "ce") {
+      bce_chr_to.classList.add("hidden");
+      ce_chr_to.classList.remove("hidden");
+
+      if (chr_from.value === "bce") {
+        input_chr_to.value =
+          document.querySelector(
+            "#id_chronology_to"
+          ).childNodes[3].firstElementChild.value;
+        value_to = input_chr_to.value;
+      }
+    }
+    if (chr_to.value === "bce") {
+      bce_chr_to.classList.remove("hidden");
+      ce_chr_to.classList.add("hidden");
+      input_chr_to.value = value_from;
+      value_to = input_chr_to.value;
+    }
+  });
+
+  input_chr_from.addEventListener("click", function (e) {
+    value_from = input_chr_from.value;
+    if (Number(value_to) < Number(value_from)) {
+      input_chr_to.value = input_chr_from.value;
+      chr_to.value = chr_from.value;
+      value_to = value_from;
+    }
+
+    display();
+  });
+
+
+
+
+ //CONTEXT OTHER 
+  context_other.classList.add("hidden");
+  context.firstElementChild.setAttribute("disabled", "disabled");
+  colour_other.classList.add('hidden');
+  colour.firstElementChild.setAttribute('disabled','disabled');
+  pigment_other.classList.add('hidden');
+  pigment.firstElementChild.setAttribute('disabled','disabled');
+  context.addEventListener("change", function () {
+    if (this.value === "other") {
+      context_other.classList.remove("hidden");
+    } else if (this.value !== "other") {
+      context_other.classList.add("hidden");
+    }
+  });
+
+//COLOUR-PIGMENT OTHER  
+
+  colour.addEventListener('change',function(){
+    if (this.value === 'other')
+    colour_other.classList.remove("hidden");
+    else if(this.value !== "other")
+    colour_other.classList.add('hidden')
+  })
+
+  pigment.addEventListener('change',function(){
+    if (this.value === 'other')
+    pigment_other.classList.remove("hidden");
+    else if(this.value !== "other")
+    pigment_other.classList.add('hidden')
+  })
+
+  
+  // INFO TEXT
+  const closeModal = function (event) {
+    
+    text_info.forEach((txt) => txt.classList.add("hide-anim"));
+      
+    setTimeout(()=>{
+      text_info.forEach((txt) => txt.classList.remove("hide-anim"));
+      text_info.forEach((txt) => txt.classList.add("hidden"));
+      btn_info.forEach((btn) => btn.classList.remove("hidden"));
+    },400);
+    
+  };
+  const openModal = function (event) {
+    event.target.nextElementSibling.classList.add("show-anim");
+    event.target.nextElementSibling.classList.remove("hidden");
+    event.target.classList.add("hidden");
+    setTimeout(()=>{
+      event.target.nextElementSibling.classList.remove("show-anim");
+    },400);
+    
+
+   
+  };
+  
+  logoInfo.forEach(btn=>btn.addEventListener('click',closeModal))
+
+  forms.forEach(form=>form.addEventListener("click", function (e) {
+    if (!e.target.className.includes("info")) {
+      closeModal();
+    }
+  }))
+  btn_info.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      openModal(e);
+    });
+  });
+///////////////////////////////
+// LOCATION fieldset 
+
+const locElements= [latitudeInput,longitudeInput,locationInput]
+locElements.forEach(el=>el.addEventListener('keyup', e=>{
+  const locValue = locationInput.value
+  const latValue = latitudeInput.value
+  const longValue = longitudeInput.value
+  
+  if (locValue){
+    latitudeInput.setAttribute('disabled','disabled')
+    longitudeInput.setAttribute('disabled','disabled')
+    
+  }
+  if (longValue || latValue){  
+    
+    locationInput.setAttribute('disabled','disabled') 
+    
+  }
+  if(!locValue){
+  latitudeInput.removeAttribute('disabled','disabled')
+  longitudeInput.removeAttribute('disabled','disabled')}
+
+if(!longValue && !latValue){
+locationInput.removeAttribute('disabled','disabled')}
+
+
+
+}))
+</script>
+{% endblock content %}

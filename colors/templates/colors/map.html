@@ -1,0 +1,101 @@
+{% extends 'layout.html' %} {% load crispy_forms_tags %}{% load mathfilters %}
+{% block title %} map presentation {% endblock title %} {% block content %}
+
+<div class="row">
+  <div class="map-box">{{map|safe}}</div>
+</div>
+<div class="row">
+  <div class="counter">
+    <p class="counter__text">{{counter}}</p>
+  </div>
+</div>
+
+<div class="row">
+  <div  class="search js-search">
+    <form class="search__form" name="sb " method="GET" action="">
+      {% csrf_token %}
+      <div class="select">
+        <select class="search__select-by js-search__select-by" name="select-by" onchange="this.form.submit();">
+          <option value="colour" selected>Colour</option>
+          <option value="context">Context</option>
+          <option value="chronology_from">Chronology</option>
+        </select>
+      </div>
+    </form>
+    <form class="search__form search__form--colourant js-search__form--colourant"  name="colourant-form" action="" method="POST">
+      {% csrf_token %}
+        <div class=" select--colourant js-select--colourant">{{select_colourant}}</div>
+        
+      {% if chr %}
+      <div>
+          <button name="chr" type="submit" class="btn btn--fifth">Search</button>
+      </div>
+      {% endif %}
+    </form>
+  </div>
+</div>
+<div class="row row--last">
+  <div class="results box box--large ">
+    <ul class="result__list">
+      {% for c in colourant_list %}
+      <li class="results__item">
+        <a class="results__link" href="{% url 'colors:colourants-detail' pk=c.pk %}">
+          {{c.pigment}},
+          {{c.context}},
+          {{c.chronology_from|abs}} 
+          {% if c.chronology_from < 0 %} BCE {%else%} CE {% endif %} / {{c.chronology_to|abs}} 
+          {% if c.chronology_to < 0 %} BCE {%else%} CE{% endif %}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+<script>
+  const select_by = document.querySelector(".js-search__select-by");
+
+  function getCookie(cookieName) {
+    let cookie = {};
+    document.cookie.split(";").forEach(function (el) {
+      let [key, value] = el.split("=");
+      cookie[key.trim()] = value;
+    });
+    return cookie[cookieName];
+  }
+  
+  
+  document.querySelector('.js-select--colourant').classList.remove('select--colourant')
+  document.querySelector('.js-search__form--colourant').style.width= ''
+  select_by.addEventListener("click", function (e) {
+    if (this.value === "context") {
+      document.cookie = "selection=context";
+      
+
+    }
+    if (this.value === "colour") {
+      document.cookie = "selection=colour";
+      
+
+    }
+    if (this.value === "chronology_from") {
+      document.cookie = "selection=chronology_from";
+    }
+  });
+
+  if (getCookie("selection")) {
+    select_by.value = getCookie("selection");
+  }
+  if (select_by.value  === 'chronology_from' ){
+   
+    document.querySelector('.js-search').classList.add('search--column')
+    document.querySelector('.js-select--colourant').classList.add('select--colourant')
+    document.querySelector('.js-search__form--colourant').style.width= '100%'
+  }
+ 
+ if( select_by.value  === 'colour' ){
+  document.querySelector('.js-search').classList.add('search--column')
+  document.querySelector('.js-select--colourant').classList.add('center-colourant')
+  document.querySelector('.js-search__form--colourant').style.width= '100%'
+
+ }
+</script>
+{% endblock%}

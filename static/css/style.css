@@ -1,0 +1,142 @@
+:root {
+  --blue: #01545cc7;
+  --petrol: #0075809c;
+  --grey: #838383;
+  --white: #eee8e8;
+  --black: #232323;
+  --orange: #ffc074;
+  font-size: 16px;
+  overflow-x: hidden;
+  font-family: "Oswald", "Raleway", sans-serif;
+  font-weight: 200;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/*  #0075809c #e7e7de  #11698e70 #ff8882c7; #ffc074 #ffc107 #FDCA40*/
+body {
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  background-color: var(--white);
+  position: relative;
+  min-height: 100vh;
+}
+
+a,
+a:active,
+a:hover {
+  text-decoration: none;
+}
+
+/*______________CONTAINERS______________*/
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: fit-content;
+}
+.row--last {
+  padding-bottom: 5rem;
+}
+
+/*______________NAVBAR______________*/
+.hidden {
+  display: none;
+}
+
+.background-nav {
+  width: 100%;
+  height: 90px;
+  background-color: var(--white);
+}
+.nav {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0.6rem 0;
+  width: 100%;
+  background-color: var(--petrol);
+}
+.nav--blue {
+  background-color: #0e327449;
+}
+.nav__list {
+  display: flex;
+  margin: 0;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+.nav__link {
+  color: var(--white);
+  font-size: 1.5rem;
+  transition: color 0.8s;
+  font-family: "Oswald", sans-serif;
+  font-weight: 500;
+}
+.nav__link:hover,
+.nav__link:active {
+  color: var(--orange);
+}
+
+.nav__img {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  transition: 1.3s all;
+}
+.nav__img:active,
+.nav__img:hover {
+  transform: scale(1.2);
+}
+
+/*______________FOOTER______________*/
+.footer {
+  z-index: 7;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  flex-flow: column nowrap;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: var(--petrol);
+}
+.footer__text {
+  color: var(--black);
+  margin: 0.5rem;
+  text-align: center;
+}
+
+.footer__link {
+  color: var(--black);
+  transition: color 0.5s;
+}
+.footer__link:active,
+.footer__link:hover {
+  color: var(--white);
+}
+.message {
+  width: 50%;
+  position: absolute;
+  left: 25%;
+  z-index: 10;
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: var(--orange);
+  border-radius: 15px;
+  text-align: center;
+  color: var(--black);
+}

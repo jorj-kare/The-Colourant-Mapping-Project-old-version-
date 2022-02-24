@@ -1,0 +1,1 @@
+web: gunicorn pigments.wsgi --log-file -
