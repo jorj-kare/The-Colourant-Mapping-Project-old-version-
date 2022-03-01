@@ -41,7 +41,7 @@
       <li class="results__item">
         <a class="results__link" href="{% url 'colors:colourants-detail' pk=c.pk %}">
           {{c.pigment}},
-          {{c.context}},
+          {{c.category_of_find}},
           {{c.chronology_from|abs}} 
           {% if c.chronology_from < 0 %} BCE {%else%} CE {% endif %} - {{c.chronology_to|abs}} 
           {% if c.chronology_to < 0 %} BCE {%else%} CE{% endif %}</a>
