@@ -16,26 +16,31 @@ class ColourantsForm(forms.ModelForm):
             'check'
 
         )
-        CHOICES_CONTEXT = (('', 'Select context'), ('wall painting', 'Wall painting'), ("sculpture", "sculpture"),
-                           ("pottery", "Pottery"), ("raw pigment", "Raw pigment"), ("lump", "Lump"), ("deposit", "Deposit"), ("other", "Other"))
+        CHOICES_CONTEXT = (('', 'Select category of find'), ('wall painting', 'Wall painting'), ("sculpture", "Sculpture"),
+                           ("pottery", "Pottery"), ("unused pigment", "Unused pigment"),("dyestuff", "Dyestuff"), ("deposit", "Deposit"), ("other", "Other"))
 
-        CHOICES = (('BCE', ((-5000, '5th millennium BCE'),
-                            (-4000, "4th millennium BCE"), (-3000,
-                                                            "3th millennium BCE"),
-                            (-2000, "2th millennium BCE"), (-1000,
-                                                            "1st millennium BCE"),
-                            (-900, "9th century BCE"), (-800, '8th century BCE'),
-                            (-700, "7th century BCE"), (-600, "6th century BCE"),
-                            (-500, "5th century BCE"), (-400, "4th century BCE"),
-                            (-300, "3th century BCE"), (-200, "2th century BCE"),
-                            (-100, "1st century BCE"))), ('CE', (
-                                (100, "1st century CE"), (200, "2th century CE"),
-                                (300, "3th century CE"), (400, "4th century CE"),
-                                (500, "5th century CE"), (600, "6th century CE"),
-                                (700, "7th century CE"), (800, "8th century CE"),
-                                (900, "9th century CE"), (1000, "10th century CE"))),)
+        CHOICES = (('BCE', (('', 'Select Chronology'),(-5000, '5000'),
+                            (-4000, "4000"), (-3000,
+                                                            "3000"),
+                            (-2000, "2000"), (-1000,
+                                                            "1000"),
+                            (-900, "900"), (-800, '800'),
+                            (-700, "700"), (-600, "600"),
+                            (-500, "500"), (-400, "400"),
+                            (-300, "300"), (-200, "200"),
+                            (-100, "100"),
+                            (0, "0"))), ('CE', (
+                                ('', 'Select Chronology'),
+                                (0, "0"),
+                                (100, "100"), (200, "200"),
+                                (300, "300"), (400, "400"),
+                                (500, "500"), (600, "600"),
+                                (700, "700"), (800, "800"),
+                                (900, "900"), (1000, "1000"))),)
 
-        PIGMENT_CHOICES=(('','Select pigment'),('red earth','Red earth'),('cinnabar','Cinnabar'),('red lead','Red lead'),('kermes','Kermes'),('sandarach (realgar)','Sandarach (Realgar)'),('madder','Madder'),('yellow earth','Yellow earth'),('orpiment','Orpiment'),('malachite','Malachite'),('verdigris','Verdigris'),('other','Other'))
+        PIGMENT_CHOICES=(('','Select pigment'),('azurite','Azurite'),('brown ochre','Brown ochre'),('calcium carbonate','Calcium carbonate'),('calcium sulfate','Calcium sulfate'),('charcoal','Charcoal'),('cinnabar','Cinnabar'),('copper salts','Copper salts'),('Egyptian blue','Egyptian blue'),('Egyptian green','Egyptian green'),('galena','Galena'),('green earth (celadonite)','Green earth (Celadonite)'),('green earth (glauconite)','Green earth (Glauconite)'),('Han blue','Han blue'),('Han purple','Han purple'),('huntine','Huntine'),('indigo','Indigo'),('kaolinite','Kaolinite'),('kermes','Kermes'),('lazurite','Lazurite'),('lead white','Lead white'),('madder','Madder'),('malachite','Malachite'),('manganese oxide','Manganese oxide'),('Maya blue','Maya blue'),('murex purple','Murex purple'),('orpiment','Orpiment'),('realgar','Realgar'),('red lead','Red lead'),('red earth','Red earth'),('soot','Soot'),('verdigris','Verdigris'),('yellow earth','Yellow earth'),('other','Other'))
+        
+        
         COLOUR_CHOICES=(('','Select colour'),('red','Red'),('brown','Brown'),('yellow','Yellow'),('green','Green'),('blue','Blue'),('purple','Purple'),('black','Black'),('white','White'),('other','Other'))
 
         widgets = {
@@ -44,7 +49,7 @@ class ColourantsForm(forms.ModelForm):
             'chronology_from': Select(choices=CHOICES, attrs={'placeholder': 'e.g. 5th century BCE'}),
             'chronology_to': Select(choices=CHOICES, attrs={'placeholder': 'e.g. 5th century BCE'}),
             'archeological_context': Textarea(attrs={'rows': 2, 'placeholder': 'Provide additional information about the context of the finds if needed.'}),
-            'context': Select(
+            'category_of_find': Select(
                 choices=CHOICES_CONTEXT, attrs={'class': 'context_select'}),
             'references': Textarea(attrs={'rows': 3, 'placeholder': 'Relevant publications.'}),
             'notes': Textarea(attrs={'rows': 2, 'placeholder': 'Extra space to provide additional information or clarifications for your entry.'}),
@@ -93,7 +98,8 @@ class ContextOther(forms.Form):
 class PigmentOther(forms.Form):
     pigment_other = forms.CharField(
         max_length=100, required=False, label='',   widget=forms.Textarea(attrs={'class': 'pigment_other', 'rows': 2, 'placeholder': 'Other: please specify.'}))
-
+class ChronologyOther(forms.Form):
+    chronology_other = forms.IntegerField(label='Specific date',widget=NumberInput(attrs={'class': 'chronology_other'}))
 
 CHOICES_PERIOD = (('bce', 'BCE'), ('ce', 'CE'))
 
@@ -110,7 +116,7 @@ class ChronologySelectForm(forms.Form):
 
         
 def context():
-    return[("", "All Contexts")] + list(Colourants.objects.values_list('context', 'context').filter(check=True).distinct())
+    return[("", "All categories of find")] + list(Colourants.objects.values_list('category_of_find', 'category_of_find').filter(check=True).distinct())
 
 
 class ContextSelectForm(forms.Form):

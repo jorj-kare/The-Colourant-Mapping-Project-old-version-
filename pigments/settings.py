@@ -13,15 +13,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-
+###############################
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-
+###############################
 DEBUG = False
 
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1']
+##############################
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
@@ -123,7 +124,7 @@ USE_TZ = True
 
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
-
+#######################################################
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES.update(default=db_from_env)
 

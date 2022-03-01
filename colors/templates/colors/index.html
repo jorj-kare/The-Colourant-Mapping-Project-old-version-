@@ -78,17 +78,26 @@ Calculate distance {% endblock title %} {%block content %}
       </div>
       <div class="entries__input entries__input--full">{{pigment_other}}</div>
 
-      <div class="entries__select-box">
-        <label for="input-chr-from">Chronology</label>
-        <div class="entries__input entries__input--chr">
-          <div class="select select--period">
+      <div class="entries__select-box entries__select-box--chr">
+        <div class="select--chr">
+          <label for="input-chr-from">Chronology</label>
+          <div class="entries__input entries__input--chr">
+            <div class="select select--period">
             <select id="chr-from" name="chr-from">
               <option value="bce">BCE</option>
               <option value="ce">CE</option>
             </select>
+            
           </div>
-          <div class="select select--chr">{{c_f.chronology_from}}</div>
+          <div class="select ">{{c_f.chronology_from}}</div></div> 
         </div>
+        <div class="chronology_other">{{chronology_other}}
+        <button type="button" class="btn-info btn-info--chr btn--fifth js-btn-info">i</button>
+          <div class="entries__info-text hidden">
+            <p> If a specific date is known, please use the designated field. BCE or CE should be specified.  </p>
+              <div class="logo-info js-logo-info btn--fifth">i</div>
+          </div>
+      </div>
       </div>
       <div class="entries__select-box">
         <label for="input-chr-to">to </label>
@@ -99,7 +108,7 @@ Calculate distance {% endblock title %} {%block content %}
               <option id="chr-to-ce" value="ce">CE</option>
             </select>
           </div>
-          <div class="select select--chr">{{c_f.chronology_to}}</div>
+          <div class="select--chr">   <div class="select  select--chr-to">{{c_f.chronology_to}}</div></div>
         </div>
       </div>
   
@@ -112,8 +121,8 @@ Calculate distance {% endblock title %} {%block content %}
       </div>
       </div>
       <div class="entries__input entries__input--context-box">
-        <label for="id_context">Context</label>
-        <div class="select">{{c_f.context}}</div>
+        <label for="category_of_find">Category of find</label>
+        <div class="select">{{c_f.category_of_find}}</div>
       </div>
       <div class="entries__input entries__input--full">{{context_other}}</div>
       <div class="entries__input entries__input--full">
@@ -187,9 +196,9 @@ Calculate distance {% endblock title %} {%block content %}
   const from_5bce = document.querySelector(
     "#id_chronology_from optgroup"
   ).firstElementChild;
-
+  const  chronology_other = document.querySelector('#id_chronology_other');
   ////////////////////
-  const context = document.querySelector("#id_context");
+  const context = document.querySelector("#id_category_of_find");
   const context_other = document.querySelector("#id_context_other").closest('.entries__input');
   const colour = document.querySelector('#id_colour')
   const colour_other = document.querySelector('#id_colour_other').closest('.entries__input');
@@ -298,6 +307,41 @@ Calculate distance {% endblock title %} {%block content %}
 
     display();
   });
+///CHRONOLOGY_OTHER
+const chrElements= [input_chr_from,input_chr_to,]
+
+
+
+chrElements.forEach(el=>el.addEventListener('change',e=>{
+  const fromValue = input_chr_from.value
+  const toValue = input_chr_to.value
+  if (fromValue || toValue){
+    chronology_other.setAttribute('disabled','disabled')
+    
+  }
+
+  if (!fromValue && !toValue){
+    chronology_other.removeAttribute('disabled','disabled')
+  }
+}))
+chronology_other.addEventListener('keyup', e=>{
+  const otherValue = chronology_other.value
+
+  
+  if (otherValue){
+    input_chr_from.setAttribute('disabled','disabled');
+    input_chr_to.setAttribute('disabled','disabled');
+    chr_to.setAttribute('disabled','disabled');
+    
+  }
+
+  if(!otherValue){
+    input_chr_from.removeAttribute('disabled','disabled')
+    input_chr_to.removeAttribute('disabled','disabled')
+    chr_to.removeAttribute('disabled','disabled')}
+    
+
+})
 
 
 

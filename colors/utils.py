@@ -29,17 +29,18 @@ def map_generator(Lat, Lon, Loc, Col,Pig, selection):
         counter = Col.count(), "colourants found from {} {} to {} {}  period".format(
             abs(selection['chr_from']), period_from, abs(selection['chr_to']), period_to)
     else:
-    
+        
         counter = Col.count(), selection, "found"
         counter = str(counter).replace("(", "").replace(")","").replace("'", "").replace(",", "")
     marker_c = MarkerCluster()
-    kw = {"prefix": "fa", "color": 'darkblue', "icon": "connectdevelop"}
+    kw = {"prefix": "fa", "color": 'darkblue',"icon": "circle-o" }
     for lt, ln, lc, col,pig in zip(Lat, Lon, Loc, Col,Pig):
 
         html = f"""
                 <h5 style="margin:1.5px; color:#232323;">Colour:</h5>{col}
                 <h5 style="margin:1.5px; color:#232323;">Pigment:</h5>{pig}
-                <h5 style="margin:1.5px; color:#232323;">Location:</h5>{lc}
+                
+                
                 </*>
                 """
         folium.Marker(location=[lt, ln], popup=html,icon=folium.Icon(**kw)).add_to(marker_c)
@@ -143,19 +144,19 @@ def select(select_by, selection):
         
         
     if select_by == 'context' and selection:
-        selection = selection[0]
-        colourant_list = Colourants.objects.all().filter(check=True, context=selection).order_by('pigment')
+       
+        colourant_list = Colourants.objects.all().filter(check=True, category_of_find=selection).order_by('pigment')
         
         Lat = Colourants.objects.filter(
-            check=True, context=selection).values_list('latitude', flat=True)
+            check=True, category_of_find=selection).values_list('latitude', flat=True)
         Lon = Colourants.objects.filter(
-            check=True, context=selection).values_list('longitude', flat=True)
+            check=True, category_of_find=selection).values_list('longitude', flat=True)
         Loc = Colourants.objects.filter(
-            check=True, context=selection).values_list('location', flat=True)
+            check=True, category_of_find=selection).values_list('location', flat=True)
         Col = Colourants.objects.filter(
-            check=True, context=selection).values_list('colour', flat=True)
+            check=True, category_of_find=selection).values_list('colour', flat=True)
         Pig = Colourants.objects.filter(
-            check=True,context=selection).values_list('pigment', flat=True)
+            check=True,category_of_find=selection).values_list('pigment', flat=True)
         
         m = map_generator(Lat, Lon, Loc, Col,Pig, selection)['map']
         counter = map_generator(Lat, Lon, Loc, Col,Pig, selection)['counter']

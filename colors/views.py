@@ -2,7 +2,7 @@
 from django.views.generic import UpdateView
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from .forms import ColourantsForm, SearchForm, ContextSelectForm, ColourantSelectForm, ChronologySelectForm, ContextOther,ColourOther, PigmentOther
+from .forms import ColourantsForm, SearchForm, ContextSelectForm, ColourantSelectForm, ChronologySelectForm, ContextOther,ColourOther, PigmentOther,ChronologyOther
 from geopy.geocoders import Nominatim
 import folium
 from colors.models import Colourants
@@ -40,7 +40,10 @@ def index(request):
         colourants_form = ColourantsForm(request.POST)
         context_other = ContextOther(request.POST)
         colour_other = ColourOther(request.POST)
+        chronology_other = ChronologyOther(request.POST)
         pigment_other = PigmentOther(request.POST)
+        
+        
         if colourants_form.is_valid():
 
             instance = colourants_form.save(commit=False)
@@ -48,23 +51,34 @@ def index(request):
             col_other = request.POST.get('colour_other')
             con_other = request.POST.get('context_other')
             pig_other = request.POST.get('pigment_other')
-
+            chr_other =request.POST.get('chronology_other')
             loc = colourants_form.cleaned_data.get('location')
             Lat = colourants_form.cleaned_data.get('latitude')
             Lon = colourants_form.cleaned_data.get('longitude')
-            con = colourants_form.cleaned_data.get('context')
+            con = colourants_form.cleaned_data.get('category_of_find')
             col = colourants_form.cleaned_data.get('colour')
             pig = colourants_form.cleaned_data.get('pigment')
-
+            chrFrom = request.POST.get('chr-from')
+            
             if con == 'other':
-                instance.context = con_other
+                instance.category_of_find = con_other
                 instance.save()
             if col == 'other':
                 instance.colour = col_other
                 instance.save()    
             if pig == 'other':
                 instance.pigment = pig_other
-                instance.save()    
+                instance.save()  
+            if(chr_other):
+                print(type(chr_other))
+                if chrFrom == 'bce':
+                    instance.chronology_from = -int(chr_other)    
+                    instance.chronology_to = -int(chr_other) 
+                if chrFrom == 'ce': 
+                    instance.chronology_from = chr_other    
+                    instance.chronology_to = chr_other     
+                instance.save()   
+                  
             if Lat and Lon:
                 location = geolocator.reverse((Lat, Lon), language='en')
 
@@ -100,6 +114,7 @@ def index(request):
     context_other = ContextOther()
     colour_other = ColourOther()
     pigment_other  =PigmentOther()
+    chronology_other = ChronologyOther()
     m = m._repr_html_()
 
     context = {
@@ -109,6 +124,7 @@ def index(request):
         'context_other': context_other,
         'colour_other': colour_other,
         'pigment_other': pigment_other,
+        'chronology_other': chronology_other,
     }
     return render(request, 'colors/index.html', context)
 
@@ -156,8 +172,14 @@ def pigments_map(request):
 
                 
 
-            if select_by == 'context':   
-                selection = [select_colourant.cleaned_data[select_by]]
+            if select_by == 'context': 
+                context = select_colourant.cleaned_data[select_by]
+                
+                if context:  
+                    
+                    selection = context
+                else:
+                    selection = None    
 
             if selection:
                 msg = select(select_by, selection)['msg'] 

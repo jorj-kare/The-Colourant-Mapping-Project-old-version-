@@ -17,7 +17,7 @@
       <div class="select">
         <select class="search__select-by js-search__select-by" name="select-by" onchange="this.form.submit();">
           <option value="colour" selected>Colour</option>
-          <option value="context">Context</option>
+          <option value="context">Category of find</option>
           <option value="chronology_from">Chronology</option>
         </select>
       </div>
@@ -43,7 +43,7 @@
           {{c.pigment}},
           {{c.context}},
           {{c.chronology_from|abs}} 
-          {% if c.chronology_from < 0 %} BCE {%else%} CE {% endif %} / {{c.chronology_to|abs}} 
+          {% if c.chronology_from < 0 %} BCE {%else%} CE {% endif %} - {{c.chronology_to|abs}} 
           {% if c.chronology_to < 0 %} BCE {%else%} CE{% endif %}</a>
       </li>
       {% endfor %}

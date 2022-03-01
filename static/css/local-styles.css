@@ -276,12 +276,14 @@ textarea:focus {
 }
 
 .entries__select-box {
+  position: relative;
   display: flex;
   flex-flow: column;
   margin: 1.5rem 1rem;
   align-content: center;
-  width: 72%;
+  width: 95%;
 }
+
 
 .select--pigment::after {
   top: 0.5rem;
@@ -343,6 +345,37 @@ textarea:focus {
   top: -.8rem;
 }
 
+#id_chronology_from,
+#id_chronology_to{
+  width: 100% ;
+}
+#id_chronology_other{  
+  display: block;
+  max-width: 6rem;
+  height: 100%;
+  
+}
+.entries__select-box--chr{
+  flex-flow:row ;
+  margin-top: 3rem;
+}
+.select--chr label{
+  position: absolute;
+  top: -1.5rem;
+}
+.chronology_other{
+  position: relative;
+  margin-right: 3rem ;
+}
+.chronology_other label{
+  position:absolute;
+  top: -1.7rem;
+}
+.btn-info--chr{
+  position: absolute;
+  right: 0;
+  top: -.5rem;
+}
 
 /* #0075809c #e7e7de  #11698e70 #ff8882c7; #ffc074 #ffc107;*/
 
@@ -396,10 +429,12 @@ textarea:focus {
   color: var(--grey);
 }
 .entries__input--context-box {
+
   display: block;
 }
-
-
+.entries__input--context-box .select {
+  width: 14rem;
+}
 .entries__input--chr {
   margin: 0 !important;
 }
@@ -412,8 +447,8 @@ textarea:focus {
 }
 
 .select--chr {
-  flex: 3;
-  min-width: 180px;
+  position: relative;
+  flex: 1;
 }
 
 /*______________MAP_SECTION______________*/
@@ -531,6 +566,11 @@ textarea:focus {
 
 #id_chr_input_from {
   margin-right: 3rem;
+}
+
+#id_category_of_find{
+width: 5rem;
+
 }
 
 /*______________SECTION_COLORANT_DETAILS______________*/
@@ -706,13 +746,13 @@ textarea:focus {
     flex-basis: 95%;
   }
 
-  .entries__select-box {
-    width: 68%;
-  }
-  .select--period {
-    flex: 1.3;
+ 
+  .select.select--period {
+    flex: 0;
     margin-right: 0;
+    
   }
+  
   .entries__input--full {
     width: 85%;
   }
@@ -766,6 +806,35 @@ textarea:focus {
     top: 30px;
     
   }
+ 
+  .entries__select-box {
+    
+    width: 70%;
+  }
+  .select--chr .select {
+    flex: 1;
+    width: 11em;
+  }
+  .entries__select-box--chr {
+     flex-flow: column;
+}
+  .chronology_other{
+    position: relative;
+  margin: 0;
+  }
+  .chronology_other label{
+    position:static;
+    margin-top: 1rem;
+    
+  }
+  .btn-info--chr{
+    position: absolute;
+    left: 52%;
+    top: 1.5rem;
+  }
+  
+
+  
   /*______________MAP_SECTION______________*/
 
   .counter {
@@ -845,6 +914,8 @@ textarea:focus {
     border-radius: 10px;
     max-width: 900px;
   }
+ 
+ 
 }
 
 @media screen and (min-width: 1200px) {
@@ -864,5 +935,11 @@ textarea:focus {
     min-height: 90vh;
     padding: 3rem 10rem;
     max-width: 1500px;
+  }
+  .entries__select-box {
+    width: 85%;
+  }
+  .btn-info--chr {
+    top: 0;
   }
 }
