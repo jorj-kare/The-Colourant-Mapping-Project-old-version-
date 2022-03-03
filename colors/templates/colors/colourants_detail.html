@@ -18,10 +18,10 @@
       <li class="details__item"><span class="details__title">Analytical techniques:</span>{{ colourants.techniques}}</li>
       <li class="details__item"><span class="details__title">Context:</span>{{ colourants.context}}</li>
       <li class="details__item">
-        <span class="details__title">Arhceological context:</span>{{ colourants.archeological_context}}
+        <span class="details__title">Arhceological context:</span>{{colourants.archeological_context}}
       </li>
       <li class="details__item"><span class="details__title">Notes:</span>{{ colourants.notes}}</li>
-      <li class="details__item"><span class="details__title">References:</span>{{ colourants.references}}</li>
+      <li class="details__item"><span class="details__title">References:</span>{{colourants.references|linebreaks}}</li>
 
       {% if colourants.public_available == True %}
       <li class="details__item"><span class="details__title">Contributor Name:</span>{{ colourants.name}}</li>
