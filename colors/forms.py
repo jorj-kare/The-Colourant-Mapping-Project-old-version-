@@ -116,7 +116,7 @@ class ChronologySelectForm(forms.Form):
 
         
 def context():
-    return[("", "All categories of find")] + list(Colourants.objects.values_list('category_of_find', 'category_of_find').filter(check=True).distinct())
+    return[("all", "All categories of find")] + list(Colourants.objects.values_list('category_of_find', 'category_of_find').filter(check=True).distinct())
 
 
 class ContextSelectForm(forms.Form):

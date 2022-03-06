@@ -70,7 +70,7 @@ def index(request):
                 instance.pigment = pig_other
                 instance.save()  
             if(chr_other):
-                print(type(chr_other))
+               
                 if chrFrom == 'bce':
                     instance.chronology_from = -int(chr_other)    
                     instance.chronology_to = -int(chr_other) 
@@ -130,17 +130,14 @@ def index(request):
 
 
 def pigments_map(request):
-
-    if 'selection' in request.COOKIES:
-        select_by = request.COOKIES['selection']
-    else:
-        select_by = request.GET.get('select-by')
+    
+    select_by = request.GET.get('select-by')
 
     chr = False
     
     if request.POST:
-
         if select_by == 'context':           
+            
             select_colourant = ContextSelectForm(request.POST)
 
         elif(select_by == 'chronology_from'):
@@ -175,11 +172,11 @@ def pigments_map(request):
             if select_by == 'context': 
                 context = select_colourant.cleaned_data[select_by]
                 
-                if context:  
+                if context == 'all' :  
                     
-                    selection = context
-                else:
                     selection = None    
+                else:
+                    selection = context
 
             if selection:
                 msg = select(select_by, selection)['msg'] 
@@ -204,8 +201,38 @@ def pigments_map(request):
                         'colourant_list']
 
             else:
-               
-                return HttpResponseRedirect(request.path_info)
+          
+                chr = False
+                selection = ''
+                m = select(select_by, selection)['map']
+                counter = select(select_by, selection)['counter']
+                colourant_list = select(select_by, selection)['colourant_list']
+
+                if select_by == 'context':
+            
+                    select_colourant = ContextSelectForm()
+        
+                elif select_by == 'chronology_from':
+                    chr = True
+                    select_colourant = ChronologySelectForm()
+            
+                else:
+                    chr = True
+                    select_colourant = ColourantSelectForm();
+            
+            
+
+            context = {
+                'chr': chr,
+                'counter': counter,
+                'colourant_list': colourant_list,
+                'map': m,
+                'select_colourant': select_colourant,
+        
+
+            }
+            return render(request, 'colors/map.html', context)
+
 
     else:
 
@@ -216,6 +243,7 @@ def pigments_map(request):
         colourant_list = select(select_by, selection)['colourant_list']
 
         if select_by == 'context':
+            
             select_colourant = ContextSelectForm()
         
         elif select_by == 'chronology_from':
