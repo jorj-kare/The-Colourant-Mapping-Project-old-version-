@@ -53,32 +53,14 @@
 <script>
   const select_by = document.querySelector(".js-search__select-by");
 
+  const selectId = document.querySelector('.js-select--colourant').firstElementChild.id;
   
-  
+  if(selectId === "id_context") select_by.value = "context"
+  if(selectId === "id_colour") select_by.value = "colour"
+  if(selectId === "id_chr_select_from") select_by.value = "chronology_from"
   document.querySelector('.js-select--colourant').classList.remove('select--colourant')
   document.querySelector('.js-search__form--colourant').style.width= ''
-  select_by.addEventListener("click", function (e) {
-    if (this.value === "context") {
-      sessionStorage.setItem('selection','context');
-      
-
-    }
-    if (this.value === "colour") {
-   
-      sessionStorage.setItem('selection','colour');
-      
-
-    }
-    if (this.value === "chronology_from") {
-      
-      sessionStorage.setItem('selection','chronology_from');
-    }
-  });
-
-  if (sessionStorage.getItem('selection')) {
-   
-    select_by.value = sessionStorage.getItem('selection');
-  }
+  
   if (select_by.value  === 'chronology_from' ){
    
     document.querySelector('.js-search').classList.add('search--column')

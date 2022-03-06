@@ -129,7 +129,7 @@ def index(request):
     return render(request, 'colors/index.html', context)
 
 
-def pigments_map(request):
+def pigments_map(request):  
     
     select_by = request.GET.get('select-by')
 
