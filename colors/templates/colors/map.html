@@ -53,36 +53,31 @@
 <script>
   const select_by = document.querySelector(".js-search__select-by");
 
-  function getCookie(cookieName) {
-    let cookie = {};
-    document.cookie.split(";").forEach(function (el) {
-      let [key, value] = el.split("=");
-      cookie[key.trim()] = value;
-    });
-    return cookie[cookieName];
-  }
   
   
   document.querySelector('.js-select--colourant').classList.remove('select--colourant')
   document.querySelector('.js-search__form--colourant').style.width= ''
   select_by.addEventListener("click", function (e) {
     if (this.value === "context") {
-      document.cookie = "selection=context";
+      sessionStorage.setItem('selection','context');
       
 
     }
     if (this.value === "colour") {
-      document.cookie = "selection=colour";
-      
+   
+      sessionStorage.setItem('selection','colour');
+      console.log(sessionStorage.getItem('selection'))
 
     }
     if (this.value === "chronology_from") {
-      document.cookie = "selection=chronology_from";
+      
+      sessionStorage.setItem('selection','chronology_from');
     }
   });
 
-  if (getCookie("selection")) {
-    select_by.value = getCookie("selection");
+  if (sessionStorage.getItem('selection')) {
+   
+    select_by.value = sessionStorage.getItem('selection');
   }
   if (select_by.value  === 'chronology_from' ){
    
